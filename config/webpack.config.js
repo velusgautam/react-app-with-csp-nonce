@@ -750,7 +750,7 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-      new NonceInjector("%%CSP_NONCE%%"),
+      new NonceInjector("_NONCE_"),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
