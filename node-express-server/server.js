@@ -33,8 +33,8 @@ app.get("/", async (req, res, next) => {
 app.use(express.static(path.join(__dirname, "/build")));
 
 // Start the server
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+  console.log(`Web app running on port ${PORT}`);
   console.log("Press Ctrl+C to quit.");
 });

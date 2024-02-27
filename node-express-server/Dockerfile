@@ -13,10 +13,8 @@ COPY server.js /app
 RUN npm install
 RUN npm run build
 
-# COPY --from=build /app/build /html
+# Expose port 80 for the Node Express server
+EXPOSE 8080
 
-# # Expose port 80 for the Nginx server
-# EXPOSE 80
-
-# Start Nginx when the container runs
+# Start node express server when the container runs
 CMD ["npm", "run", "server"]
