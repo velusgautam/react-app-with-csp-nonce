@@ -1,6 +1,6 @@
 # React Web App with CSP nonce
 
-A basic React + webpack + nginx application with CSP `nonce` regenerated for every page request.
+A basic React + webpack + express (node) application with CSP `nonce` regenerated for every page request.
 
 The nonce attribute in the script lets you “whitelist” inline script and style elements, eliminating the need for the broader and less secure CSP `unsafe-inline` directive, thereby maintaining the fundamental CSP feature of prohibiting inline script and style elements in general.
 
@@ -12,4 +12,36 @@ The main crux of the nonce is that: `nonces must be regenerated for every page r
 
 The idea here is that we try to build a react application using webpack, make webpack put a placeholder for nonce using NonceInjector Plugin.
 
-Utilize Nginx to generate a random nonce encoded in base64. Subsequently, replace the placeholder nonce, initially inserted by webpack, with the generated base64 nonce within the script and style tags for each request.
+```javascript
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+class NonceInjector {
+  constructor(NONCE_PLACEHOLDER) {
+    this.NONCE_PLACEHOLDER = NONCE_PLACEHOLDER;
+  }
+  apply(compiler) {
+    compiler.hooks.thisCompilation.tap("NonceInjector", (compilation) => {
+      HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
+        "NonceInjector",
+        (compilation, callback) => {
+          const { headTags } = compilation;
+          headTags.forEach((tag) => {
+            tag.attributes.nonce = this.NONCE_PLACEHOLDER;
+          });
+          callback(null, compilation);
+        }
+      );
+    });
+  }
+}
+
+module.exports = NonceInjector;
+```
+
+then add NonceInjector pulugin to webpack plugin config with the placeholder value `_NONCE_`
+
+```javascript
+new NonceInjector("_NONCE_");
+```
+
+Utilize express (node) to generate a random nonce encoded in base64. Subsequently, replace the placeholder nonce, initially inserted by webpack, with the generated base64 nonce within the script and style tags for each request.
