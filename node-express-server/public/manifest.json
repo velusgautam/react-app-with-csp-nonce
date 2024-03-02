@@ -1,6 +1,6 @@
 {
   "short_name": "React App with CSP nonce setup",
-  "name": "React App with CSP nonce setup using Nginx server",
+  "name": "React App with CSP nonce setup using Node Express server",
   "icons": [
     {
       "src": "favicon.png",

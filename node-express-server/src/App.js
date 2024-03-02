@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p> React App with CSP nonce setup using Nginx server</p>
+        <p> React App with CSP nonce setup using Node Express server</p>
         <p>
           A CSP nonce will be a randomly generated token that we use exactly one
           time.

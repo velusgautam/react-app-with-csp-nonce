@@ -1,8 +1,8 @@
-const Buffer = Buffer.allocUnsafe(24);
+const bufferValue = Buffer.allocUnsafe(24);
 
 export default {
-  cspNonce() {
-    crypto.getRandomValues(Buffer);
-    return Buffer.toString("base64");
+  getNonce() {
+    crypto.getRandomValues(bufferValue);
+    return bufferValue.toString("base64");
   },
 };
