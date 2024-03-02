@@ -1,47 +1,37 @@
-# React Web App with CSP nonce
+# Application Setup
 
-A basic React + webpack + express (node) application with CSP `nonce` regenerated for every page request.
+Run below commands to setup the application
 
-The nonce attribute in the script lets you “whitelist” inline script and style elements, eliminating the need for the broader and less secure CSP `unsafe-inline` directive, thereby maintaining the fundamental CSP feature of prohibiting inline script and style elements in general.
-
-Utilising the `nonce` attribute in script or style informs browsers that the inline content was deliberately included in the document by the server (nginx) rather than being injected by a potentially malicious third party.
-
-The [Content Security Policy](https://web.dev/articles/csp) article’s [If you absolutely must use it](https://web.dev/articles/csp#if-you-absolutely-must-use-it) section has a good example of how to use the nonce attribute in the script or style:
-
-The main crux of the nonce is that: `nonces must be regenerated for every page request and they must be unguessable.`
-
-The idea here is that we try to build a react application using webpack, make webpack put a placeholder for nonce using NonceInjector Plugin.
-
-```javascript
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-class NonceInjector {
-  constructor(NONCE_PLACEHOLDER) {
-    this.NONCE_PLACEHOLDER = NONCE_PLACEHOLDER;
-  }
-  apply(compiler) {
-    compiler.hooks.thisCompilation.tap("NonceInjector", (compilation) => {
-      HtmlWebpackPlugin.getHooks(compilation).afterTemplateExecution.tapAsync(
-        "NonceInjector",
-        (compilation, callback) => {
-          const { headTags } = compilation;
-          headTags.forEach((tag) => {
-            tag.attributes.nonce = this.NONCE_PLACEHOLDER;
-          });
-          callback(null, compilation);
-        }
-      );
-    });
-  }
-}
-
-module.exports = NonceInjector;
+```shell
+npm install
 ```
 
-then add NonceInjector pulugin to webpack plugin config with the placeholder value `_NONCE_`
-
-```javascript
-new NonceInjector("_NONCE_");
+```shell
+npm run build
 ```
 
-Utilize express (node) to generate a random nonce encoded in base64. Subsequently, replace the placeholder nonce, initially inserted by webpack, with the generated base64 nonce within the script and style tags for each request.
+```shell
+npm run server
+```
+
+## Local Development
+
+```shell
+npm install
+```
+
+```shell
+npm run start
+```
+
+### Node Server
+
+Server config in the [server.js](https://github.com/velusgautam/react-app-with-csp-nonce/blob/main/node-express-server/server.js) file
+
+## Docker
+
+The below command will start running the application in port 8080. You can run below command and then go to browser `http://localhost:8080/` to see the application running
+
+```shell
+docker build -t react-node-app . && docker run -it --rm -p 8080:80 react-node-app
+```

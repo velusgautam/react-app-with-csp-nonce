@@ -10,6 +10,8 @@ const nonceBuffer = Buffer.allocUnsafe(24);
 app.get("/", async (req, res, next) => {
   crypto.webcrypto.getRandomValues(nonceBuffer);
   const nonce = nonceBuffer.toString("base64");
+
+  // Serve all files with below extensions statically
   if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
     next();
   } else {
@@ -19,11 +21,13 @@ app.get("/", async (req, res, next) => {
       "Content-Security-Policy",
       `object-src 'none'; base-uri 'none'; script-src 'strict-dynamic' 'nonce-${nonce}' 'unsafe-inline' 'self'; require-trusted-types-for 'script'`
     );
+
     res.header("Expires", "-1");
     res.header("Pragma", "no-cache");
     const data = fs.readFileSync(path.join(__dirname, "/build", "index.html"), {
       encoding: "utf8",
     });
+
     // replace all _NONCE_ placeholder with the generated nonce
     const result = data.replaceAll("_NONCE_", nonce);
     res.send(result);

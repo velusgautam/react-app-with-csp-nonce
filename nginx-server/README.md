@@ -1,15 +1,35 @@
-# React Web App with CSP nonce
+# Application Setup
 
-A basic React + webpack + nginx application with CSP `nonce` regenerated for every page request.
+Run below commands to setup the application
 
-The nonce attribute in the script lets you “whitelist” inline script and style elements, eliminating the need for the broader and less secure CSP `unsafe-inline` directive, thereby maintaining the fundamental CSP feature of prohibiting inline script and style elements in general.
+```shell
+npm install
+```
 
-Utilising the `nonce` attribute in script or style informs browsers that the inline content was deliberately included in the document by the server (nginx) rather than being injected by a potentially malicious third party.
+```shell
+npm run build
+```
 
-The [Content Security Policy](https://web.dev/articles/csp) article’s [If you absolutely must use it](https://web.dev/articles/csp#if-you-absolutely-must-use-it) section has a good example of how to use the nonce attribute in the script or style:
+To see the build application in `http://localhost:8080/`
 
-The main crux of the nonce is that: `nonces must be regenerated for every page request and they must be unguessable.`
+```
+npx serve -s build -l 8080
+```
 
-The idea here is that we try to build a react application using webpack, make webpack put a placeholder for nonce using NonceInjector Plugin.
+### Nginx configs
 
-Utilize Nginx to generate a random nonce encoded in base64. Subsequently, replace the placeholder nonce, initially inserted by webpack, with the generated base64 nonce within the script and style tags for each request.
+In Nginx we utilise the [njs](https://github.com/velusgautam/react-app-with-csp-nonce/blob/main/nginx-server/nginx/njs/main.mjs) scripting to generate the random nonce string.
+
+[Nginx Config file](https://github.com/velusgautam/react-app-with-csp-nonce/blob/main/nginx-server/nginx/nginx.conf)
+
+## Nginx Setup with Docker
+
+Running Nginx server locally is easy with the docker. If you have docker installed, run the below docker command.
+
+```shell
+docker build -t react-nginx-app . && docker run -it --rm -p 8080:80 react-nginx-app
+```
+
+The docker command will start running the application in port 8080. Then go to browser `http://localhost:8080/` to see the application running
+
+Inspect and see in the Network tab
