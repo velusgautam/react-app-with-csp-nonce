@@ -1,4 +1,6 @@
-# Application Setup
+# React + Node Express Server
+
+## Application Setup
 
 Run below commands to setup the application
 
@@ -33,5 +35,5 @@ Server config in the [server.js](https://github.com/velusgautam/react-app-with-c
 The below command will start running the application in port 8080. You can run below command and then go to browser `http://localhost:8080/` to see the application running
 
 ```shell
-docker build -t react-node-app . && docker run -it --rm -p 8080:80 react-node-app
+docker build -t react-node-app . && docker run -it --rm -e PORT='8080' -p 8080:8080 react-node-app
 ```

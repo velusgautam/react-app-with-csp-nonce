@@ -1,4 +1,6 @@
-# Application Setup
+# React + Nginx Server
+
+## Application Setup
 
 Run below commands to setup the application
 

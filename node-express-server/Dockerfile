@@ -8,13 +8,11 @@ COPY config /app
 COPY scripts /app/scripts
 COPY config /app/config
 COPY package*.json /app
-COPY server.js /app
 
 RUN npm install
 RUN npm run build
 
-# Expose port 80 for the Node Express server
-EXPOSE 8080
+COPY server.js /app
 
 # Start node express server when the container runs
 CMD ["npm", "run", "server"]

@@ -5,6 +5,11 @@ const crypto = require("crypto");
 const fs = require("fs");
 const app = express();
 
+// Color logs
+const magenta = (input) => "\x1b[35m" + input + "\x1b[0m";
+const red = (input) => "\x1b[31m" + input + "\x1b[0m";
+const green = (input) => "\x1b[32m" + input + "\x1b[0m";
+
 const nonceBuffer = Buffer.allocUnsafe(24);
 
 app.get("/", async (req, res, next) => {
@@ -39,6 +44,8 @@ app.use(express.static(path.join(__dirname, "/build")));
 // Start the server
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
-  console.log(`Web app running on port ${PORT}`);
-  console.log("Press Ctrl+C to quit.");
+  console.log(
+    `\n${magenta(`App is started here: ${green(`http://localhost:${PORT}`)}`)}`
+  );
+  console.log(`\n${red(`Press Ctrl+C to quit.`)}`);
 });
