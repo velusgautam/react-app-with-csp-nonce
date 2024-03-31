@@ -14,13 +14,16 @@ RUN npm run build
 
 
 FROM nginx:alpine
+RUN apk add --no-cache netcat-openbsd
+
 # Copy the built React app to Nginx's web server directory
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/njs /etc/nginx/njs
+COPY nginx/start.sh /usr/local/bin/start.sh
 COPY --from=build /app/build /html
 
-# # Expose port 80 for the Nginx server
-# EXPOSE 80
+RUN chmod +x /usr/local/bin/start.sh
+
 
 # Start Nginx when the container runs
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/local/bin/start.sh"]

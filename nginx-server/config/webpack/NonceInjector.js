@@ -1,7 +1,7 @@
 "use strict";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = class NonceInjector {
+class NonceInjector {
   constructor(NONCE_PLACEHOLDER) {
     this.NONCE_PLACEHOLDER = NONCE_PLACEHOLDER;
   }
@@ -11,12 +11,14 @@ module.exports = class NonceInjector {
         "NonceInjector",
         (compilation, callback) => {
           const { headTags } = compilation;
-          headTags.forEach((x) => {
-            x.attributes.nonce = this.NONCE_PLACEHOLDER;
+          headTags.forEach((tag) => {
+            tag.attributes.nonce = this.NONCE_PLACEHOLDER;
           });
           callback(null, compilation);
         }
       );
     });
   }
-};
+}
+
+module.exports = NonceInjector;

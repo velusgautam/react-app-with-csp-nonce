@@ -29,7 +29,7 @@ In Nginx we utilise the [njs](https://github.com/velusgautam/react-app-with-csp-
 Running Nginx server locally is easy with the docker. If you have docker installed, run the below docker command.
 
 ```shell
-docker build -t react-nginx-app . && docker run -it --rm -p 8080:80 react-nginx-app
+docker build -t react-nginx-app . && docker run -it --rm -e NGINX_PORT=8080 -p 8080:8080 react-nginx-app
 ```
 
 The docker command will start running the application in port 8080. Then go to browser `http://localhost:8080/` to see the application running
