@@ -7,10 +7,10 @@
 Running Nginx server locally is easy with the docker. If you have docker installed, run the below docker command.
 
 ```shell
-docker build -t react-nginx-app . && docker run -it --rm -e NGINX_PORT=8080 -p 8080:8080 react-nginx-app
+docker build -t react-nginx-app . && docker run -it --rm -e NGINX_PORT=3001 -p 3001:3001 react-nginx-app
 ```
 
-The docker command will start running the application in port 8080. Then go to browser `http://localhost:8080/` to see the application running
+The docker command will start running the application in port 3001. Then go to browser `http://localhost:3001/` to see the application running
 
 Inspect and see in the Network tab the nonce is being changed in each request.
 

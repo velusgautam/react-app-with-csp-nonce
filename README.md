@@ -88,6 +88,10 @@ In Node we use the same logic in the [server](https://github.com/velusgautam/rea
 
 ![](./images/image-1.png)
 
+After starting the page you can run the [CSPTestScript.js](https://github.com/velusgautam/react-app-with-csp-nonce/blob/main/CSPTestScript.js) file in console to validate.
+
+![](./images/csp-test.png)
+
 ### Verify Nonce in script and style
 
 ![](./images/image-2.png)
