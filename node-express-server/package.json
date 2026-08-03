@@ -67,5 +67,4 @@
     "test": "node scripts/test.js",
     "server": "node server.js"
   }
-
 }
